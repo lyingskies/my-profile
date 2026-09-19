@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Personal Profile</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 20% 20%, #12364b, transparent 30%),
+                radial-gradient(circle at 80% 80%, #102b3c, transparent 30%),
+                #05080c;
+
+            color: white;
+            overflow: hidden;
+        }
+
+        /* BACKGROUND PARTICLES */
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #8ddfff;
+            border-radius: 50%;
+            opacity: .5;
+            animation: snow 8s linear infinite;
+        }
+
+        .p1 { left: 10%; animation-delay: 0s; }
+        .p2 { left: 25%; animation-delay: 2s; }
+        .p3 { left: 45%; animation-delay: 4s; }
+        .p4 { left: 65%; animation-delay: 1s; }
+        .p5 { left: 85%; animation-delay: 3s; }
+
+        @keyframes snow {
+            from {
+                transform: translateY(-20px);
+            }
+
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* CONTAINER */
+
+        .website {
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            margin: auto;
+            position: relative;
+        }
+
+        /* SLIDES */
+
+        .slide {
+            position: absolute;
+            inset: 0;
+
+            padding: 35px 25px 90px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            opacity: 0;
+            transform: translateX(50px);
+
+            pointer-events: none;
+
+            transition:
+                opacity .5s ease,
+                transform .5s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        /* CARD */
+
+        .card {
+            background: rgba(9, 17, 24, .78);
+
+            border: 1px solid rgba(130, 210, 240, .14);
+
+            border-radius: 28px;
+
+            padding: 30px 24px;
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.55),
+                0 0 35px rgba(0,160,255,.06);
+        }
+
+        /* HOME */
+
+        .home {
+            text-align: center;
+        }
+
+        .profile {
+            width: 140px;
+            height: 140px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            padding: 4px;
+
+            border: 3px solid #75d9ff;
+
+            box-shadow:
+                0 0 20px rgba(0,180,255,.5),
+                0 0 60px rgba(0,180,255,.15);
+
+            animation: glow 3s infinite;
+        }
+
+        @keyframes glow {
+            50% {
+                box-shadow:
+                    0 0 30px rgba(0,190,255,.8),
+                    0 0 80px rgba(0,190,255,.2);
+            }
+        }
+
+        h1 {
+            margin-top: 20px;
+
+            font-size: 32px;
+
+            letter-spacing: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    white,
+                    #6edcff,
+                    white
+                );
+
+            background-size: 200%;
+
+            -webkit-background-clip: text;
+
+            color: transparent;
+
+            animation: text 4s linear infinite;
+        }
+
+        @keyframes text {
+            to {
+                background-position: 200%;
+            }
+        }
+
+        .username {
+            margin-top: 8px;
+
+            color: #718c9d;
+
+            font-size: 14px;
+        }
+
+        .quote {
+            margin-top: 22px;
+
+            color: #a9bac5;
+
+            line-height: 1.7;
+
+            font-style: italic;
+        }
+
+        .status {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 8px 15px;
+
+            border-radius: 20px;
+
+            color: #83dcff;
+
+            background: rgba(0,180,255,.08);
+
+            border: 1px solid rgba(0,180,255,.2);
+
+            font-size: 12px;
+        }
+
+        /* TITLE */
+
+        .title {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        .title h2 {
+            font-size: 27px;
+
+            color: #bdefff;
+
+            letter-spacing: 2px;
+        }
+
+        .title p {
+            color: #617987;
+
+            font-size: 13px;
+
+            margin-top: 6px;
+        }
+
+        /* ABOUT */
+
+        .bio {
+            display: grid;
+
+            gap: 10px;
+        }
+
+        .bio-item {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.025);
+
+            border: 1px solid rgba(255,255,255,.05);
+
+            transition: .3s;
+        }
+
+        .bio-item:hover {
+            transform: translateX(5px);
+
+            border-color: #3b8aaa;
+        }
+
+        .label {
+            color: #687e8c;
+        }
+
+        .value {
+            color: #dcecf4;
+
+            text-align: right;
+        }
+
+        /* FAVORITES */
+
+        .favorites {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .favorite {
+            padding: 18px;
+
+            background: rgba(255,255,255,.035);
+
+            border: 1px solid rgba(255,255,255,.06);
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            transition: .3s;
+        }
+
+        .favorite:hover {
+            transform: translateY(-5px);
+
+            background: rgba(0,180,255,.08);
+
+            border-color: #3d9fc5;
+        }
+
+        .emoji {
+            font-size: 28px;
+
+            display: block;
+
+            margin-bottom: 8px;
+        }
+
+        .favorite span:last-child {
+            color: #a7bbc7;
+
+            font-size: 13px;
+        }
+
+        /* HOBBY */
+
+        .hobby {
+            margin-bottom: 12px;
+
+            padding: 17px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,.035);
+
+            border-left: 3px solid #55cfff;
+        }
+
+        .hobby h3 {
+            color: #d8f4ff;
+
+            margin-bottom: 6px;
+        }
+
+        .hobby p {
+            color: #778d9a;
+
+            line-height: 1.6;
+
+            font-size: 13px;
+        }
+
+        /* VIBE */
+
+        .vibe {
+            text-align: center;
+        }
+
+        .vibe-text {
+            color: #9eb1bc;
+
+            line-height: 1.8;
+
+            font-size: 15px;
+        }
+
+        .tags {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 22px;
+        }
+
+        .tag {
+            padding: 8px 13px;
+
+            border-radius: 20px;
+
+            background: rgba(0,170,255,.07);
+
+            border: 1px solid rgba(0,170,255,.16);
+
+            color: #8ddcff;
+
+            font-size: 12px;
+        }
+
+        /* SOCIAL */
+
+        .social {
+            display: grid;
+
+            gap: 12px;
+        }
+
+        .social a {
+            display: block;
+
+            padding: 15px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            color: #cde9f4;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.035);
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            transition: .3s;
+        }
+
+        .social a:hover {
+            transform: translateY(-4px);
+
+            background: rgba(0,180,255,.1);
+
+            border-color: #4acaff;
+
+            box-shadow: 0 0 20px rgba(0,180,255,.15);
+        }
+
+        /* NAVIGATION */
+
+        .navigation {
+            position: fixed;
+
+            bottom: 20px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: calc(100% - 40px);
+
+            max-width: 450px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 10px 15px;
+
+            background: rgba(7,13,18,.85);
+
+            border: 1px solid rgba(130,210,240,.12);
+
+            border-radius: 20px;
+
+            backdrop-filter: blur(15px);
+
+            z-index: 100;
+        }
+
+        .nav-btn {
+            border: none;
+
+            background: transparent;
+
+            color: #91a9b6;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            padding: 8px 14px;
+
+            border-radius: 10px;
+        }
+
+        .nav-btn:hover {
+            color: #7bdcff;
+
+            background: rgba(0,170,255,.08);
+        }
+
+        .dots {
+            display: flex;
+
+            gap: 6px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #344651;
+
+            transition: .3s;
+        }
+
+        .dot.active {
+            width: 22px;
+
+            border-radius: 10px;
+
+            background: #5bd2ff;
+
+            box-shadow: 0 0 10px #35c8ff;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:400px) {
+
+            .slide {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .card {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .profile {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PARTICLES -->
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+
+
+    <div class="website">
+
+
+        <!-- SLIDE 1 : HOME -->
+
+        <section class="slide active">
+
+            <div class="card home">
+
+                <img
+                    src="foto.jpg"
+                    alt="Foto Profil"
+                    class="profile"
+                >
+
+                <h1>Liesky</h1>
+
+                <p class="username">
+                    @Something About Kyy.
+                </p>
+
+                <div class="status">
+                    ● Living quietly
+                </div>
+
+                <p class="quote">
+                "Semesta menyampaikan kabar indah tanpa harus bersuara ,
+                 seperti melalui sorot matamu yang diam diam menetap di kalbu ,
+                 jika senyummu lebih indah daripada angkasa lantas aku bisa apa selain jatuh cinta".
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLIDE 2 : ABOUT -->
+
+        <section class="slide">
+
+            <div class="card">
+
+                <div class="title">
+                    <h2>About Me</h2>
+                    <p> sedikit tentang diriku</p>
+                </div>
+
+                <div class="bio">
+
+                    <div class="bio-item">
+                        <span class="label">Nama</span>
+                        <span class="value">Muhammad Liesky Perdana Putra Junior</span>
+                    </div>
+                    
+                    <div class="bio-item">
+                        <span class="label">Tempat Tanggal Lahir</span>
+                        <span class="value">Jakarta , 06 10 2009</span>
+                    </div>
+
+                    <div class="bio-item">
+                        <span class="label">Umur</span>
+                        <span class="value">16 Tahun</span>
+                    </div>
+
+                    <div class="bio-item">
+                        <span class="label">Sekolah</span>
+                        <span class="value">SMK Negeri 9 Kab.Tangerang</span>
+                    </div>
+
+                    <div class="bio-item">
+                        <span class="label">Jurusan</span>
+                        <span class="value">Teknik Komputer dan Jaringan ( TKJ )</span>
+                    </div>
+
+                    <div class="bio-item">
+                        <span class="label">Domisili</span>
+                        <span class="value">Indonesia</span>
+                    </div>
+
+                    <div class="bio-item">
+                        <span class="label">Zodiak</span>
+                        <span class="value">♎ Libra</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLIDE 3 : FAVORITES -->
+
+        <section class="slide">
+
+            <div class="card">
+
+                <div class="title">
+                    <h2>Favorites</h2>
+                    <p>hal-hal yang aku suka</p>
+                </div>
+
+                <div class="favorites">
+
+                    <div class="favorite">
+                        <span class="emoji">🎧</span>
+                        <span>Musik</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">🍦</span>
+                        <span>Es Krim</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">🌧️</span>
+                        <span>Hujan</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">🏔️</span>
+                        <span>Gunung</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">🌙</span>
+                        <span>Malam</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">❄️</span>
+                        <span>Suasana Dingin</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">🎮</span>
+                        <span>Gaming</span>
+                    </div>
+
+                    <div class="favorite">
+                        <span class="emoji">📱</span>
+                        <span>Editing</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLIDE 4 : HOBBIES -->
+
+        <section class="slide">
+
+            <div class="card">
+
+                <div class="title">
+                    <h2>My Hobbies</h2>
+                    <p>beberapa hal yang sering aku lakukan</p>
+                </div>
+
+                <div class="hobby">
+
+                    <h3>🎤 Listening And Singing</h3>
+
+                    <p>
+                        Menikmati ,
+                        Mendengarkan , menyayikan Sebuah Lagu.
+                    </p>
+
+                </div>
+
+                <div class="hobby">
+
+                    <h3>🎬 Editing</h3>
+
+                    <p>
+                        Suka mengedit foto dan video,
+                        mencoba style baru dan membuat
+                        sesuatu terlihat lebih menarik.
+                    </p>
+
+                </div>
+
+                <div class="hobby">
+
+                    <h3>🎮 Gaming</h3>
+
+                    <p>
+                        Main game sesekali ketika sedang
+                        senggang untuk hiburan.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLIDE 5 : MUSIC -->
+
+        <section class="slide">
+
+            <div class="card vibe">
+
+                <div class="title">
+                    <h2>My Music</h2>
+                    <p>musik yang cocok dengan vibe-ku</p>
+                </div>
+
+                <p class="vibe-text">
+                    Biasanya suka musik yang punya suasana
+                    tenang, chill, dan sedikit melankolis.
+                    Musik yang enak didengar ketika malam
+                    atau sedang sendirian.
+                </p>
+
+                <div class="tags">
+
+                    <span class="tag">Lo-Fi</span>
+                    <span class="tag">Pop</span>
+                    <span class="tag">Indie</span>
+                    <span class="tag">Chill</span>
+                    <span class="tag">Slow</span>
+                    <span class="tag">Night Vibes</span>
+               
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLIDE 6 : MY VIBE -->
+
+        <section class="slide">
+
+            <div class="card vibe">
+
+                <div class="title">
+                    <h2>My Vibe</h2>
+                    <p>cara aku menikmati hidup</p>
+                </div>
+
+                <p class="vibe-text">
+                    Tidak terlalu suka keramaian.
+                    Lebih nyaman dengan suasana tenang,
+                    ngobrol dengan diri sendiri , 
+                    mendengarkan musik, melihat langit malam,
+                    atau sekadar menikmati waktu sendiri.
+                </p>
+
+                <div class="tags">
+
+                    <span class="tag">Calm</span>
+                    <span class="tag">Chill</span>
+                    <span class="tag">Quiet</span>
+                    <span class="tag">Simple</span>
+                    <span class="tag">Cold</span>
+                    <span class="tag">Night</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLIDE 7 : SOCIAL -->
+
+        <section class="slide">
+
+            <div class="card">
+
+                <div class="title">
+
+                    <h2>Find Me</h2>
+
+                    <p>
+                        social media
+                    </p>
+
+                </div>
+
+                <div class="social">
+
+                    <a href="https://instagram.com/Something_About_Kyy">
+                        📸 Instagram
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="navigation">
+
+        <button class="nav-btn" onclick="prevSlide()">
+            ←
+        </button>
+
+        <div class="dots">
+
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+
+        </div>
+
+        <button class="nav-btn" onclick="nextSlide()">
+            →
+        </button>
+
+    </div>
+
+
+    <script>
+
+        const slides =
+            document.querySelectorAll(".slide");
+
+        const dots =
+            document.querySelectorAll(".dot");
+
+        let current = 0;
+
+
+        function showSlide(index) {
+
+            if (index >= slides.length) {
+                current = 0;
+            }
+
+            else if (index < 0) {
+                current = slides.length - 1;
+            }
+
+            else {
+                current = index;
+            }
+
+
+            slides.forEach((slide, i) => {
+
+                slide.classList.toggle(
+                    "active",
+                    i === current
+                );
+
+            });
+
+
+            dots.forEach((dot, i) => {
+
+                dot.classList.toggle(
+                    "active",
+                    i === current
+                );
+
+            });
+
+        }
+
+
+        function nextSlide() {
+
+            showSlide(current + 1);
+
+        }
+
+
+        function prevSlide() {
+
+            showSlide(current - 1);
+
+        }
+
+
+        /* SWIPE UNTUK HP */
+
+        let startX = 0;
+
+        document.addEventListener(
+            "touchstart",
+            function(e) {
+
+                startX =
+                    e.touches[0].clientX;
+
+            }
+        );
+
+
+        document.addEventListener(
+            "touchend",
+            function(e) {
+
+                let endX =
+                    e.changedTouches[0].clientX;
+
+                let difference =
+                    startX - endX;
+
+
+                if (Math.abs(difference) > 50) {
+
+                    if (difference > 0) {
+                        nextSlide();
+                    }
+
+                    else {
+                        prevSlide();
+                    }
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
